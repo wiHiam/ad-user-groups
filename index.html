@@ -119,7 +119,7 @@ Code wird hier angezeigt...</pre
           .getElementById("username-input")
           .value.trim();
         username = usernameInput; // Speichere den Benutzernamen
-        const buttons = document.querySelectorAll("button");
+        const buttons = document.querySelectorAll(".selection-buttons button");
 
         if (username) {
           // Aktivieren der Buttons
@@ -163,7 +163,6 @@ Code wird hier angezeigt...</pre
         // Disable the button
         if (button) {
           button.setAttribute("disabled", ""); // Add "disabled" attribute
-          //button.classList.add("disabled"); // Add a class for styling
         }
 
         // Generate key
@@ -179,7 +178,6 @@ Code wird hier angezeigt...</pre
         // Re-enable the button
         if (button) {
           button.removeAttribute("disabled"); // Remove "disabled" attribute
-          button.classList.remove("disabled"); // Remove styling class
         }
 
         updateKey();
@@ -189,9 +187,9 @@ Code wird hier angezeigt...</pre
         const keyContent = document.getElementById("key-content");
         const groupCommands = groups.map(
           (group) =>
-            `Add-ADGroupMember -Identity "${group}" -Members "${username}`
+            `Add-ADGroupMember -Identity "${group}" -Members "${username}"`
         );
-        const allCommands = [...groupCommands].filter(Boolean); // Filtere leere Werte
+        const allCommands = groupCommands.filter(Boolean); // Filtere leere Werte
         const encodedKey = btoa(JSON.stringify(allCommands)); // Encode als base64
         keyContent.textContent = encodedKey;
       }
@@ -202,12 +200,7 @@ Code wird hier angezeigt...</pre
 
         try {
           const decodedGroups = JSON.parse(atob(keyInput)); // Decode base64
-          const commands = decodedGroups
-            .map(
-              (group) =>
-                `Add-ADGroupMember -Identity "${group}" -Members "${username}`
-            )
-            .join("\n");
+          const commands = decodedGroups.join("\n");
           decodedCodeElement.textContent = commands;
         } catch (err) {
           decodedCodeElement.textContent = "Ungültiger Schlüssel!";
