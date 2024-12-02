@@ -17,8 +17,7 @@ body {
   line-height: 1.6;
   background-color: #f9f9f9;
   color: #333;
-  margin: 0;
-  padding: 0 10% 0 10%;
+  margin: 0 10%;
   box-sizing: border-box;
 }
 
@@ -55,6 +54,15 @@ h4 {
   margin-bottom: 5px;
 }
 
+.card {
+    width: auto;
+    padding: 2rem;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 /* Groups-Container */
 .group-container {
   width: auto;
@@ -89,7 +97,7 @@ h4 {
 
 /* Wrapper für Item */
 .wrapper {
-    width: auto;
+    width: 100%;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -97,16 +105,10 @@ h4 {
 }
 
 .item {
-  width: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  padding: 2rem;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Text innerhalb von Items */
@@ -203,6 +205,7 @@ button[disabled] {
 }
 
 #username {
+    text-align: center;
   width: auto;
   margin-left: auto;
   margin-right: auto;

@@ -18,7 +18,9 @@
 
     <div class="wrapper">
       <h1>Einstellungen</h1>
-      <div id="username">
+
+      <div id="username" class="card">
+        <h4>Benutzernamen eingeben</h4>
         <input
           type="text"
           id="username-input"
@@ -36,7 +38,7 @@
         </div>
       </div>
 
-      <div class="item">
+      <div class="item card">
         <div class="text">
           <h4>Remote Zugang</h4>
           <p>
@@ -117,7 +119,7 @@ Code wird hier angezeigt...</pre
           .getElementById("username-input")
           .value.trim();
         username = usernameInput; // Speichere den Benutzernamen
-        const buttons = document.querySelectorAll(".selection-buttons button");
+        const buttons = document.querySelectorAll("button");
 
         if (username) {
           // Aktivieren der Buttons
