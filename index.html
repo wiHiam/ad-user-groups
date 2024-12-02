@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AD-Gruppen Generator</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>Übersicht</h1>
+
+    <div class="group-container" id="group-container"></div>
+
+    <div class="code-box" id="code-box">
+      <div class="copy-icon" onclick="copyKey()">Kopieren</div>
+      <pre id="key-content">Schlüssel wird hier generiert...</pre>
+    </div>
+
+    <div class="wrapper">
+      <h1>Einstellungen</h1>
+      <div id="username">
+        <input
+          type="text"
+          id="username-input"
+          placeholder="Geben Sie den Benutzernamen ein..."
+          oninput="updateKeyWithUsername()"
+        />
+      </div>
+      <div class="selection">
+        <h4>Wählen Sie eine Option</h4>
+        <div class="selection-buttons">
+          <button onclick="addGroup('Value1', this)" disabled>Gruppe 1</button>
+          <button onclick="addGroup('Value2', this)" disabled>Gruppe 2</button>
+          <button onclick="addGroup('Value3', this)" disabled>Gruppe 3</button>
+          <button onclick="addGroup('Value4', this)" disabled>Gruppe 4</button>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="text">
+          <h4>Remote Zugang</h4>
+          <p>
+            Mit unserem Remotezugang erhalten Sie sicheren Zugriff auf Ihre
+            Daten und Systeme, egal wo Sie sich befinden. Arbeiten Sie bequem
+            von Zuhause, unterwegs oder im Büro, ohne Kompromisse bei der
+            Datensicherheit. Der Zugriff erfolgt verschlüsselt und
+            benutzerfreundlich, sodass Sie jederzeit effizient und geschützt
+            arbeiten können. Bleiben Sie flexibel – Ihre digitale Welt ist nur
+            einen Klick entfernt.
+          </p>
+        </div>
+        <button onclick="addGroup('Value5', this)" disabled>Hinzufügen</button>
+      </div>
+
+      <div class="item">
+        <div class="text">
+          <h4>Remote Zugang</h4>
+          <p>
+            Mit unserem Remotezugang erhalten Sie sicheren Zugriff auf Ihre
+            Daten und Systeme, egal wo Sie sich befinden. Arbeiten Sie bequem
+            von Zuhause, unterwegs oder im Büro, ohne Kompromisse bei der
+            Datensicherheit. Der Zugriff erfolgt verschlüsselt und
+            benutzerfreundlich, sodass Sie jederzeit effizient und geschützt
+            arbeiten können. Bleiben Sie flexibel – Ihre digitale Welt ist nur
+            einen Klick entfernt.
+          </p>
+        </div>
+        <button onclick="addGroup('Value6', this)" disabled>Hinzufügen</button>
+      </div>
+
+      <div class="item">
+        <div class="text">
+          <h4>Remote Zugang</h4>
+          <p>
+            Mit unserem Remotezugang erhalten Sie sicheren Zugriff auf Ihre
+            Daten und Systeme, egal wo Sie sich befinden. Arbeiten Sie bequem
+            von Zuhause, unterwegs oder im Büro, ohne Kompromisse bei der
+            Datensicherheit. Der Zugriff erfolgt verschlüsselt und
+            benutzerfreundlich, sodass Sie jederzeit effizient und geschützt
+            arbeiten können. Bleiben Sie flexibel – Ihre digitale Welt ist nur
+            einen Klick entfernt.
+          </p>
+        </div>
+        <button onclick="addGroup('Value7', this)" disabled>Hinzufügen</button>
+      </div>
+
+      <div>
+        <h3>Schlüssel entschlüsseln</h3>
+        <input
+          type="text"
+          id="key-input"
+          placeholder="Geben Sie den Schlüssel ein..."
+        />
+        <button id="button-decode" onclick="decodeKey()">Entschlüsseln</button>
+        <pre
+          id="decoded-code"
+          style="
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f7f7f7;
+            font-family: monospace;
+            min-height: 100px;
+          "
+        >
+Code wird hier angezeigt...</pre
+        >
+      </div>
+    </div>
+
+    <script>
+      const groups = [];
+      let username = "";
+
+      function updateKeyWithUsername() {
+        const usernameInput = document
+          .getElementById("username-input")
+          .value.trim();
+        username = usernameInput; // Speichere den Benutzernamen
+        const buttons = document.querySelectorAll(".selection-buttons button");
+
+        if (username) {
+          // Aktivieren der Buttons
+          buttons.forEach((button) => button.removeAttribute("disabled"));
+        } else {
+          // Deaktivieren der Buttons
+          buttons.forEach((button) => button.setAttribute("disabled", ""));
+        }
+
+        updateKey(); // Aktualisiere den Schlüssel
+      }
+
+      function addGroup(name, button) {
+        const container = document.getElementById("group-container");
+
+        // Check if the group already exists
+        if (groups.includes(name)) {
+          console.log("Gruppe existiert bereits!");
+          return;
+        }
+
+        // Add Group to the list
+        groups.push(name);
+
+        // Update UI
+        const group = document.createElement("div");
+        group.className = "group";
+        group.textContent = name;
+
+        const remove = document.createElement("span");
+        remove.className = "remove";
+        remove.textContent = "✖";
+        remove.onclick = () => {
+          container.removeChild(group);
+          removeGroup(name, button);
+        };
+
+        group.appendChild(remove);
+        container.appendChild(group);
+
+        // Disable the button
+        if (button) {
+          button.setAttribute("disabled", ""); // Add "disabled" attribute
+          //button.classList.add("disabled"); // Add a class for styling
+        }
+
+        // Generate key
+        updateKey();
+      }
+
+      function removeGroup(name, button) {
+        const index = groups.indexOf(name);
+        if (index > -1) {
+          groups.splice(index, 1);
+        }
+
+        // Re-enable the button
+        if (button) {
+          button.removeAttribute("disabled"); // Remove "disabled" attribute
+          button.classList.remove("disabled"); // Remove styling class
+        }
+
+        updateKey();
+      }
+
+      function updateKey() {
+        const keyContent = document.getElementById("key-content");
+        const groupCommands = groups.map(
+          (group) =>
+            `Add-ADGroupMember -Identity "${group}" -Members "${username}`
+        );
+        const allCommands = [...groupCommands].filter(Boolean); // Filtere leere Werte
+        const encodedKey = btoa(JSON.stringify(allCommands)); // Encode als base64
+        keyContent.textContent = encodedKey;
+      }
+
+      function decodeKey() {
+        const keyInput = document.getElementById("key-input").value;
+        const decodedCodeElement = document.getElementById("decoded-code");
+
+        try {
+          const decodedGroups = JSON.parse(atob(keyInput)); // Decode base64
+          const commands = decodedGroups
+            .map(
+              (group) =>
+                `Add-ADGroupMember -Identity "${group}" -Members "${username}`
+            )
+            .join("\n");
+          decodedCodeElement.textContent = commands;
+        } catch (err) {
+          decodedCodeElement.textContent = "Ungültiger Schlüssel!";
+        }
+      }
+
+      function copyKey() {
+        const keyContent = document.getElementById("key-content");
+        navigator.clipboard
+          .writeText(keyContent.textContent)
+          .then(() => {
+            alert("Schlüssel kopiert!");
+          })
+          .catch((err) => {
+            alert("Fehler beim Kopieren des Schlüssels: " + err);
+          });
+      }
+    </script>
+  </body>
+</html>
